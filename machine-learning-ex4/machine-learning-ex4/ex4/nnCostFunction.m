@@ -63,23 +63,14 @@ Theta2_grad = zeros(size(Theta2));
 %
 
 X = [ones(m, 1) X];
-hl = sigmoid(X*Theta1');
-hl = [ones(m,1) hl];
-h = sigmoid(hl*Theta2');
-
-c = (y'*log(h)) + ((1-y')*log(1-h));
-factor = -(sum(c))/m;
-J = J + factor
-
-
-
-
-
-
-
-
-
-
+for i = 1:num_labels
+	
+	hl = sigmoid(X(i,:)*Theta1');
+	hl = [ones(size(hl,1),1) hl];
+	h = sigmoid(hl*Theta2');
+	c = (y(i)*log(h)) + ((1-y(i))*log(1-h));
+	J = J + (-sum(c)./m);
+end
 
 
 
