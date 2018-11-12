@@ -64,17 +64,32 @@ Theta2_grad = zeros(size(Theta2));
 
 X = [ones(m, 1) X];
 y_nn = eye(num_labels,num_labels);
+t1=0;t2=0;
 for i = 1:m
 	hl = sigmoid(X(i,:)*Theta1');
 	hl = [ones(size(hl,1),1) hl];
 	h = sigmoid(hl*Theta2');
+
 	c = (y_nn(:,y(i))'*log(h')) + ((1-y_nn(:,y(i))')*log(1-h'));
-	J_unr(i) = (-(c)/m);	
+	J_unr(i) = (-(c)/m);
+
+	del3 = h' - y_nn(:,y(i));
+	del2 = (Theta2'*del3).*hl'.*(1-hl');
+	t1 = t1 + (del2(2:end,:)*X(i,:));
+	t2 = t2 + (del3*hl);
 
 end
 
+Theta1_grad = (1.0/m)*(t1 + [zeros(size(Theta1,1),1) lambda*Theta1(:,2:end)]);
+Theta2_grad = (1.0/m)*(t2 + [zeros(size(Theta2,1),1) lambda*Theta2(:,2:end)]);
+
+
 J_unr = sum(J_unr);
 
+theta = [Theta1(:,2:end)(:) ; Theta2(:,2:end)(:)];
+factor = (lambda/(2*m))*sum(theta.^2);
+
+J = J_unr + factor;
 
 
 
