@@ -24,6 +24,8 @@ sigma = 0.3;
 %
 
 list = [0.01 0.03 0.1 0.3 1 2 10 30];
+
+%{
 for i = 1:length(list)
 	s = list(i);
 	for j = 1:length(list)
@@ -35,8 +37,10 @@ for i = 1:length(list)
 end
 min = min(min(p));
 [r,c] = find(min==p);
-C = list(c);
-sigma = list(r);
+%}
+
+C = list(5);
+sigma = list(3);
 
 
 
