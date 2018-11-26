@@ -20,14 +20,11 @@ grad = zeros(size(theta));
 %
 
 h = X * theta;
-J_unr = (1.0/(2.0*m))*(sum((h-y).^2));
-J = J_unr + ((lambda/(2*m))*(sum(theta(2:end,:).^2)));
-for i=1:size(X,2)
-	grad_unr(:,i) = (1.0/m)*(sum((h-y).*X(:,i)));
+J = ((1/(2*m))*(sum((h-y).^2))) + ((lambda/(2*m))*(sum(theta(2:end,:).^2)));
+for i = 1:size(theta,1)
+	g_unr(i,:) = ((1/m)*sum((h-y).*X(:,i)));
 end
-grad = grad_unr' + (lambda/m)*[0;theta(2:end,:)];
-
-
+grad = g_unr + (lambda/m)*[0;theta(2:end,:)];
 
 
 

@@ -24,8 +24,11 @@ idx = zeros(size(X,1), 1);
 m = size(X,1);
 
 for i = 1:m
+	s = zeros(K,1);
 	t = (X(i,:)-centroids);
-	s = (t(:,1).^2) + (t(:,2).^2);
+	for j = 1:size(centroids,2)
+		s += t(:,j).^2;
+	end
 	[n, idx(i)] = min(s);	
 end
 
